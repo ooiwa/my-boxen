@@ -55,3 +55,28 @@ github "xquartz",    "1.1.0"
 
 # Optional/custom modules. There are tons available at
 # https://github.com/boxen.
+
+github "osx", "1.0.0"
+
+# local application for develop
+github "postgresapp",    "1.0.0"
+github "pgadmin3",       "1.0.0"
+github "sequel_pro",     "1.0.0"
+github "iterm2",         "1.0.3"
+github "virtualbox",     "1.0.5"
+github "sublime_text_2", "1.1.2"
+github "chrome",         "1.1.0"
+github "firefox",        "1.1.1"
+github "omnigraffle",    "1.2.0"
+
+# local application for utility
+github "dropbox",        "1.1.0"
+github "skype",          "1.0.2"
+github "hipchat",        "1.0.7"
+github "alfred",         "1.1.6"
+github "mou",            "1.1.3"
+github "vlc",            "1.0.3"
+github "flux",           "1.0.0"
+github "cinch",          "1.0.0"
+github "fluid",          "1.0.0"
+github "omnigraffle",    "1.2.0"

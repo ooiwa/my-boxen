@@ -1,25 +1,51 @@
 class people::ooiwa {
-  include skype
+ 
+  ## Puppet module
   include iterm2::stable
   include chrome
   include alfred
-
-  $home     = "/Users/${::boxen_user}"
-  $src      = "${home}/src"
-  $dotfiles = "${src}/dotfiles"
-
-  file { $src:
-    ensure => directory
+  include ruby::2_0_0
+ 
+  ## homebrew
+  package {
+    [
+      'tmux',
+    ]:
   }
-
+ 
+  ## dotfiles from github
+  $home     = "/Users/${::luser}"
+  $dotfiles = "${home}/dots"
+ 
+  # git clone
   repository { $dotfiles:
-    source  => "ooiwa/dotfiles",
-    require => File[$src]
+    source  => "ooiwa/dots",
   }
-
-  exec { "sh ${dotfiles}/install.sh":
+ 
+  ## zsh
+  package {
+    'zsh':
+      install_options => [
+        '--disable-etcdir',
+      ];
+  }
+ 
+  file_line { 'add zsh to /etc/shells':
+    path    => '/etc/shells',
+    line    => "${boxen::config::homebrewdir}/bin/zsh",
+    require => Package['zsh'],
+    before  => Osx_chsh[$::luser];
+  }
+ 
+  osx_chsh { $::luser:
+    shell => "${boxen::config::homebrewdir}/bin/zsh";
+  }
+ 
+  ## settings
+  exec { "osx-settings":
     cwd => $dotfiles,
-    creates => "${home}/.zshrc",
-    require => Repository[$dotfiles],
+    #creates => "${home}/.zshrc",
+    command => "sh ${dotfiles}/osx -s",
+    require => Repository[$dotfiles]
   }
 }
